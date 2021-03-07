@@ -1,0 +1,91 @@
+﻿@*@model IEnumerable<ArtistAgencyWeb.Models.Movie>*@
+@model IEnumerable<ArtistAgencyWeb.DTOs.MovieDTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row">
+    
+    <div class="col-7">
+        <br/>
+        <h2>Movie List</h2>
+        <div class="row">
+            <div class="col-3">
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+            <div class="col-9">
+                <div class="d-flex justify-content-end">
+                    <input id="textoABuscar" style="margin-right: 10px;" type="text" placeholder="Search..." />
+                    <button onclick="SearchMovie()">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="Filtered"></div>
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Genre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Salary)
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salary)
+                    </td>
+
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                        <a href="#" onclick="LoadEditView('@item.Id')">Edit</a> |
+                        @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                        <a href="#" onclick="LoadDetailsView('@item.Id')">Details</a> |
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id }) |*@
+                        <a href="#" onclick="LoadDeleteView('@item.Id')">Delete</a> |
+                        @if (item.Assigned == false)
+                        {
+                            @*@Html.ActionLink("Assign Movie", "Assign", new { id = item.Id })*@
+                            <a href="#" onclick="LoadAssignView('@item.Id')">Assign</a>
+
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div id="details" class="col-5">
+
+    </div>
+
+
+</div>
+
+@section Scripts{
+ 
+<script src="~/Scripts/Movies/Index.js"></script>
+    
+    }
+

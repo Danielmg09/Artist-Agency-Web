@@ -1,0 +1,17 @@
+﻿@model ArtistAgencyWeb.DTOs.MusicianDTO
+@{
+    ViewBag.Title = "Perform";
+    Layout = null;
+}
+
+
+<h5>Are you sure you want to perform this concert?</h5>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Perform" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

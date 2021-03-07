@@ -1,0 +1,81 @@
+﻿@*@model IEnumerable<ArtistAgencyWeb.Models.Concert>*@
+@model IEnumerable<ArtistAgencyWeb.DTOs.ConcertDTO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-7">
+        <br/>
+        <h2>Concert List</h2>
+
+        <div class="row">
+            <div class="col-3">
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+            <div class="col-9">
+
+                <div class="d-flex justify-content-end">
+                    <input id="textoABuscar" style="margin-right: 10px;" type="text" placeholder="Search..." />
+                    <button onclick="SearchConcert()">Search</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="Filtered"></div>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Venue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Salary)
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Venue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salary)
+                    </td>
+
+                    <td>
+
+                        <a href="#" onclick="LoadEditView('@item.Id')">Edit</a> |
+                        <a href="#" onclick="LoadDetailsView('@item.Id')">Details</a> |
+                        <a href="#" onclick="LoadDeleteView('@item.Id')">Delete</a> |
+                        @if (item.Assigned == false)
+                        {
+                            <a href="#" onclick="LoadAssignView('@item.Id')">Assign</a>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div id="details"class="col-5"></div>
+</div>
+
+@section Scripts{
+
+    <script src="~/Scripts/Concerts/Index.js"></script>
+}

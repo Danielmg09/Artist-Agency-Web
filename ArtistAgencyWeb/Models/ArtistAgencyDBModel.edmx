@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="agencydb2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="income" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Concert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="venue" Type="nvarchar" MaxLength="50" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="idMusician" Type="int" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="salary" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="assigned" Type="bit" />
+          <Property Name="completed" Type="bit" />
+          <Property Name="removed" Type="bit" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" />
+          <Property Name="genre" Type="nvarchar" MaxLength="50" />
+          <Property Name="idActor" Type="int" />
+        </EntityType>
+        <EntityType Name="Musician">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="removed" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Actor_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Actor" Type="Self.Actor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Actor">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concert_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Concert" Type="Self.Concert" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Concert">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concert_Musician">
+          <End Role="Musician" Type="Self.Musician" Multiplicity="0..1" />
+          <End Role="Concert" Type="Self.Concert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musician">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Concert">
+              <PropertyRef Name="idMusician" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Actor">
+          <End Role="Actor" Type="Self.Actor" Multiplicity="0..1" />
+          <End Role="Movie" Type="Self.Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="idActor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Musician_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Musician" Type="Self.Musician" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Musician">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="agencydb2ModelStoreContainer">
+          <EntitySet Name="Actor" EntityType="Self.Actor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Concert" EntityType="Self.Concert" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musician" EntityType="Self.Musician" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Actor_Client" Association="Self.FK_Actor_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Actor" EntitySet="Actor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_User" Association="Self.FK_Client_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concert_Job" Association="Self.FK_Concert_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Concert" EntitySet="Concert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concert_Musician" Association="Self.FK_Concert_Musician">
+            <End Role="Musician" EntitySet="Musician" />
+            <End Role="Concert" EntitySet="Concert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Actor" Association="Self.FK_Movie_Actor">
+            <End Role="Actor" EntitySet="Actor" />
+            <End Role="Movie" EntitySet="Movie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Job" Association="Self.FK_Movie_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Movie" EntitySet="Movie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Musician_Client" Association="Self.FK_Musician_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Musician" EntitySet="Musician" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="agencydb2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="agencydb2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actor" EntityType="agencydb2Model.Actor" />
+          <EntitySet Name="Client" EntityType="agencydb2Model.Client" />
+          <EntitySet Name="Concert" EntityType="agencydb2Model.Concert" />
+          <EntitySet Name="Job" EntityType="agencydb2Model.Job" />
+          <EntitySet Name="Movie" EntityType="agencydb2Model.Movie" />
+          <EntitySet Name="Musician" EntityType="agencydb2Model.Musician" />
+          <EntitySet Name="User" EntityType="agencydb2Model.User" />
+          <AssociationSet Name="FK_Actor_Client" Association="agencydb2Model.FK_Actor_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Actor" EntitySet="Actor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Actor" Association="agencydb2Model.FK_Movie_Actor">
+            <End Role="Actor" EntitySet="Actor" />
+            <End Role="Movie" EntitySet="Movie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_User" Association="agencydb2Model.FK_Client_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Musician_Client" Association="agencydb2Model.FK_Musician_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Musician" EntitySet="Musician" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concert_Job" Association="agencydb2Model.FK_Concert_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Concert" EntitySet="Concert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concert_Musician" Association="agencydb2Model.FK_Concert_Musician">
+            <End Role="Musician" EntitySet="Musician" />
+            <End Role="Concert" EntitySet="Concert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Job" Association="agencydb2Model.FK_Movie_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Movie" EntitySet="Movie" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Actor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="agencydb2Model.FK_Actor_Client" FromRole="Actor" ToRole="Client" />
+          <NavigationProperty Name="Movie" Relationship="agencydb2Model.FK_Movie_Actor" FromRole="Actor" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="income" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Actor" Relationship="agencydb2Model.FK_Actor_Client" FromRole="Client" ToRole="Actor" />
+          <NavigationProperty Name="User" Relationship="agencydb2Model.FK_Client_User" FromRole="Client" ToRole="User" />
+          <NavigationProperty Name="Musician" Relationship="agencydb2Model.FK_Musician_Client" FromRole="Client" ToRole="Musician" />
+        </EntityType>
+        <EntityType Name="Concert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="venue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idMusician" Type="Int32" />
+          <NavigationProperty Name="Job" Relationship="agencydb2Model.FK_Concert_Job" FromRole="Concert" ToRole="Job" />
+          <NavigationProperty Name="Musician" Relationship="agencydb2Model.FK_Concert_Musician" FromRole="Concert" ToRole="Musician" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salary" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="assigned" Type="Boolean" />
+          <Property Name="completed" Type="Boolean" />
+          <Property Name="removed" Type="Boolean" />
+          <NavigationProperty Name="Concert" Relationship="agencydb2Model.FK_Concert_Job" FromRole="Job" ToRole="Concert" />
+          <NavigationProperty Name="Movie" Relationship="agencydb2Model.FK_Movie_Job" FromRole="Job" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idActor" Type="Int32" />
+          <NavigationProperty Name="Actor" Relationship="agencydb2Model.FK_Movie_Actor" FromRole="Movie" ToRole="Actor" />
+          <NavigationProperty Name="Job" Relationship="agencydb2Model.FK_Movie_Job" FromRole="Movie" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Musician">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="agencydb2Model.FK_Musician_Client" FromRole="Musician" ToRole="Client" />
+          <NavigationProperty Name="Concert" Relationship="agencydb2Model.FK_Concert_Musician" FromRole="Musician" ToRole="Concert" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="removed" Type="Boolean" />
+          <NavigationProperty Name="Client" Relationship="agencydb2Model.FK_Client_User" FromRole="User" ToRole="Client" />
+        </EntityType>
+        <Association Name="FK_Actor_Client">
+          <End Type="agencydb2Model.Client" Role="Client" Multiplicity="1" />
+          <End Type="agencydb2Model.Actor" Role="Actor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Actor">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Actor">
+          <End Type="agencydb2Model.Actor" Role="Actor" Multiplicity="0..1" />
+          <End Type="agencydb2Model.Movie" Role="Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="idActor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_User">
+          <End Type="agencydb2Model.User" Role="User" Multiplicity="1" />
+          <End Type="agencydb2Model.Client" Role="Client" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Musician_Client">
+          <End Type="agencydb2Model.Client" Role="Client" Multiplicity="1" />
+          <End Type="agencydb2Model.Musician" Role="Musician" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Musician">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concert_Job">
+          <End Type="agencydb2Model.Job" Role="Job" Multiplicity="1" />
+          <End Type="agencydb2Model.Concert" Role="Concert" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Concert">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concert_Musician">
+          <End Type="agencydb2Model.Musician" Role="Musician" Multiplicity="0..1" />
+          <End Type="agencydb2Model.Concert" Role="Concert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musician">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Concert">
+              <PropertyRef Name="idMusician" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Job">
+          <End Type="agencydb2Model.Job" Role="Job" Multiplicity="1" />
+          <End Type="agencydb2Model.Movie" Role="Movie" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="agencydb2ModelStoreContainer" CdmEntityContainer="agencydb2Entities">
+          <EntitySetMapping Name="Actor">
+            <EntityTypeMapping TypeName="agencydb2Model.Actor">
+              <MappingFragment StoreEntitySet="Actor">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="agencydb2Model.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="income" ColumnName="income" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concert">
+            <EntityTypeMapping TypeName="agencydb2Model.Concert">
+              <MappingFragment StoreEntitySet="Concert">
+                <ScalarProperty Name="idMusician" ColumnName="idMusician" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="venue" ColumnName="venue" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job">
+            <EntityTypeMapping TypeName="agencydb2Model.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="removed" ColumnName="removed" />
+                <ScalarProperty Name="completed" ColumnName="completed" />
+                <ScalarProperty Name="assigned" ColumnName="assigned" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movie">
+            <EntityTypeMapping TypeName="agencydb2Model.Movie">
+              <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="idActor" ColumnName="idActor" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musician">
+            <EntityTypeMapping TypeName="agencydb2Model.Musician">
+              <MappingFragment StoreEntitySet="Musician">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="agencydb2Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="removed" ColumnName="removed" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

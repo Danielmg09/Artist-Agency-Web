@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ArtistAgencyWeb.DTOs.MovieDTO>
+@{
+    Layout = null;
+}
+
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+
+                <td>
+                    
+                    <a href="#" onclick="LoadEditView('@item.Id')">Edit</a> |
+                    
+                    <a href="#" onclick="LoadDetailsView('@item.Id')">Details</a> |
+                   
+                    <a href="#" onclick="LoadDeleteView('@item.Id')">Delete</a> |
+                    @if (item.Assigned == false)
+                    {
+                        
+                        <a href="#" onclick="LoadAssignView('@item.Id')">Assign</a>
+
+                    }
+
+                </td>
+            </tr>
+        }
+
+    </table>

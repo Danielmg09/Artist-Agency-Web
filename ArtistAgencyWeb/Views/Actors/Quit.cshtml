@@ -1,0 +1,18 @@
+﻿@model ArtistAgencyWeb.DTOs.ActorDTO
+@{
+    ViewBag.Title = "Quit";
+    Layout = null;
+}
+
+
+<h5>Are you sure you want to quit this movie?</h5>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Quit" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

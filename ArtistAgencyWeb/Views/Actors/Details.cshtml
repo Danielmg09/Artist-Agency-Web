@@ -1,0 +1,111 @@
+﻿@model ArtistAgencyWeb.DTOs.ActorDTO
+
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+}
+<br />
+<h2>Actor Details</h2>
+<h4>@Model.CompleteName </h4>
+
+
+<div>
+    <hr />
+    @*<h4>Actor</h4>*@
+
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Income)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Income)
+        </dd>
+
+    </dl>
+
+
+
+    <br />
+    <h5>Movie List</h5>
+    <br />
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieList[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieList[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieList[0].Salary)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.MovieList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+
+                <td>
+
+                    @if (item.Completed == false)
+                    {
+                    <p>
+                        <a href="#" onclick="LoadPerformView(@item.Id,@Model.Id)">Perform</a> |
+                        <a href="#" onclick="LoadQuitView(@item.Id,@Model.Id)">Quit</a>
+                    </p>
+                        
+
+                    }
+                    else
+                    {
+                        <p>Job completed</p>
+                    }
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div id="perform">
+
+    </div>
+
+</div>
+<p>
+    <a href="#" onclick="LoadEditView('@Model.Id')">Edit</a> |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+@section Scripts{
+
+    <script src="~/Scripts/Actors/Details.js"></script>
+
+}
