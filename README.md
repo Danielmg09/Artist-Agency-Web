@@ -1,8 +1,7 @@
 ## Artist-Agency-Web
 ### Web management app created with .NET Framework using C#, SQLServer, Entity Framework and ASP.NET
 
-Sample database file included in 'DB' folder
-
+Sample database file included in 'DB' folder. SQL file and bacpac ( choose one )
 This is a class exercise to practise with C# (classes and inheritance), databases and their integration in a MVC pattern app using different frameworks ad utilities in Visual Studio.
 
 In this management app you can manage jobs and clients: 
